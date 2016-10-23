@@ -59,12 +59,16 @@ static void __init ek_map_io(void)
 	at91_register_uart(0, 0, 0);
 
 	/* USART0 on ttyS1. (Rx, Tx, CTS, RTS, DTR, DSR, DCD, RI) */
-	at91_register_uart(AT91SAM9260_ID_US0, 1, ATMEL_UART_CTS | ATMEL_UART_RTS
-			   | ATMEL_UART_DTR | ATMEL_UART_DSR | ATMEL_UART_DCD
-			   | ATMEL_UART_RI);
-
+	//at91_register_uart(AT91SAM9260_ID_US0, 1, ATMEL_UART_CTS | ATMEL_UART_RTS | ATMEL_UART_DTR | ATMEL_UART_DSR | ATMEL_UART_DCD | ATMEL_UART_RI);
+	at91_register_uart(AT91SAM9260_ID_US0, 1, ATMEL_UART_CTS | ATMEL_UART_RTS | ATMEL_UART_DTR | ATMEL_UART_DSR | ATMEL_UART_DCD);
 	/* USART1 on ttyS2. (Rx, Tx, RTS, CTS) */
 	at91_register_uart(AT91SAM9260_ID_US1, 2, ATMEL_UART_CTS | ATMEL_UART_RTS);
+	/* USART2 on ttyS3. (Rx, Tx) */
+	at91_register_uart(AT91SAM9260_ID_US2, 3, 0);
+	/* USART3 on ttyS4. (Rx, Tx) */
+	at91_register_uart(AT91SAM9260_ID_US3, 4, 0);
+	/* USART4 on ttyS5. (Rx, Tx) */
+	at91_register_uart(AT91SAM9260_ID_US4, 5, 0);
 
 	/* set serial console to ttyS0 (ie, DBGU) */
 	at91_set_serial_console(0);
@@ -333,14 +337,17 @@ static void __init ek_board_init(void)
 {
 	/* Serial */
 	at91_add_device_serial();
+#if 0
 	/* USB Host */
 	at91_add_device_usbh(&ek_usbh_data);
 	/* USB Device */
 	at91_add_device_udc(&ek_udc_data);
 	/* SPI */
 	at91_add_device_spi(ek_spi_devices, ARRAY_SIZE(ek_spi_devices));
+#endif
 	/* NAND */
 	ek_add_device_nand();
+#if 0
 	/* Ethernet */
 	at91_add_device_eth(&ek_macb_data);
 	/* MMC */
@@ -354,9 +361,11 @@ static void __init ek_board_init(void)
 	at91_gpio_leds(ek_leds, ARRAY_SIZE(ek_leds));
 	/* Push Buttons */
 	ek_add_device_buttons();
+#endif
 }
 
-MACHINE_START(AT91SAM9260EK, "Atmel AT91SAM9260-EK")
+
+MACHINE_START(AT91SAM9260EK, "===[ Atmel AT91SAM9260 GPS tracker ]===")
 	/* Maintainer: Atmel */
 	.boot_params	= AT91_SDRAM_BASE + 0x100,
 	.timer		= &at91sam926x_timer,
