@@ -54,21 +54,19 @@ static void __init ek_map_io(void)
 {
 	/* Initialize processor: 18.432 MHz crystal */
 	at91sam9260_initialize(18432000);
-
 	/* DBGU on ttyS0. (Rx & Tx only) */
 	at91_register_uart(0, 0, 0);
-
 	/* USART0 on ttyS1. (Rx, Tx, CTS, RTS, DTR, DSR, DCD, RI) */
 	//at91_register_uart(AT91SAM9260_ID_US0, 1, ATMEL_UART_CTS | ATMEL_UART_RTS | ATMEL_UART_DTR | ATMEL_UART_DSR | ATMEL_UART_DCD | ATMEL_UART_RI);
-	at91_register_uart(AT91SAM9260_ID_US0, 1, ATMEL_UART_CTS | ATMEL_UART_RTS | ATMEL_UART_DTR | ATMEL_UART_DSR | ATMEL_UART_DCD);
+	at91_register_uart(AT91SAM9260_ID_US0, 1, ATMEL_UART_CTS | ATMEL_UART_RTS | ATMEL_UART_DTR | ATMEL_UART_DCD);
 	/* USART1 on ttyS2. (Rx, Tx, RTS, CTS) */
 	at91_register_uart(AT91SAM9260_ID_US1, 2, ATMEL_UART_CTS | ATMEL_UART_RTS);
 	/* USART2 on ttyS3. (Rx, Tx) */
-	at91_register_uart(AT91SAM9260_ID_US2, 3, 0);
+	//at91_register_uart(AT91SAM9260_ID_US2, 3, 0);
 	/* USART3 on ttyS4. (Rx, Tx) */
-	at91_register_uart(AT91SAM9260_ID_US3, 4, 0);
+	//at91_register_uart(AT91SAM9260_ID_US3, 4, 0);
 	/* USART4 on ttyS5. (Rx, Tx) */
-	at91_register_uart(AT91SAM9260_ID_US4, 5, 0);
+	//at91_register_uart(AT91SAM9260_ID_US4, 5, 0);
 
 	/* set serial console to ttyS0 (ie, DBGU) */
 	at91_set_serial_console(0);
