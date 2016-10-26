@@ -180,13 +180,13 @@ static struct sam9_smc_config __initdata ek_nand_smc_config = {
 	.ncs_write_setup	= 0,
 	.nwe_setup		= 1,
 
-	.ncs_read_pulse		= 3,
-	.nrd_pulse		= 3,
+	.ncs_read_pulse		= 4,
+	.nrd_pulse		= 2,
 	.ncs_write_pulse	= 3,
-	.nwe_pulse		= 3,
+	.nwe_pulse		= 2,
 
 	.read_cycle		= 5,
-	.write_cycle		= 5,
+	.write_cycle		= 3,
 
 	.mode			= AT91_SMC_READMODE | AT91_SMC_WRITEMODE | AT91_SMC_EXNWMODE_DISABLE,
 	.tdf_cycles		= 2,
@@ -226,13 +226,13 @@ static struct mci_platform_data __initdata ek_mci0_data = {
 static struct gpio_led ek_leds[] = {
 	{	/* "bottom" led, green, userled1 to be defined */
 		.name			= "ds5",
-		.gpio			= AT91_PIN_PA6,
+		.gpio			= AT91_PIN_PA26,
 		.active_low		= 1,
 		.default_trigger	= "none",
 	},
 	{	/* "power" led, yellow */
 		.name			= "ds1",
-		.gpio			= AT91_PIN_PA9,
+		.gpio			= AT91_PIN_PA27,
 		.default_trigger	= "heartbeat",
 	}
 };
@@ -311,37 +311,49 @@ static void __init ek_board_init(void)
 	at91_register_uart(0, 0, 0);
 
 	/* USART0 on ttyS1. (Rx, Tx, CTS, RTS, DTR, DSR, DCD, RI) */
-	at91_register_uart(AT91SAM9260_ID_US0, 1, ATMEL_UART_CTS | ATMEL_UART_RTS
-			   | ATMEL_UART_DTR | ATMEL_UART_DSR | ATMEL_UART_DCD
-			   | ATMEL_UART_RI);
+	at91_register_uart(AT91SAM9260_ID_US0, 1, ATMEL_UART_CTS | ATMEL_UART_RTS | ATMEL_UART_DTR | ATMEL_UART_DSR | ATMEL_UART_DCD | ATMEL_UART_RI);
+	at91_register_uart(AT91SAM9260_ID_US1, 2, 0);
+	at91_register_uart(AT91SAM9260_ID_US2, 3, 0);
+	at91_register_uart(AT91SAM9260_ID_US3, 4, 0);
+
 
 	/* USART1 on ttyS2. (Rx, Tx, RTS, CTS) */
 	at91_register_uart(AT91SAM9260_ID_US1, 2, ATMEL_UART_CTS | ATMEL_UART_RTS);
+	at91_register_uart(AT91SAM9260_ID_US2, 3,0);
+	at91_register_uart(AT91SAM9260_ID_US3, 4,0);
 	at91_add_device_serial();
+#if 0
 	/* USB Host */
 	at91_add_device_usbh(&ek_usbh_data);
 	/* USB Device */
 	at91_add_device_udc(&ek_udc_data);
 	/* SPI */
 	at91_add_device_spi(ek_spi_devices, ARRAY_SIZE(ek_spi_devices));
+#endif
 	/* NAND */
 	ek_add_device_nand();
+#if 0
 	/* Ethernet */
 	at91_add_device_eth(&ek_macb_data);
 	/* MMC */
 	at91_add_device_mci(0, &ek_mci0_data);
+#endif
 	/* I2C */
 	at91_add_device_i2c(ek_i2c_devices, ARRAY_SIZE(ek_i2c_devices));
+#if 0
 	/* SSC (to AT73C213) */
 	at73c213_set_clk(&at73c213_data);
 	at91_add_device_ssc(AT91SAM9260_ID_SSC, ATMEL_SSC_TX);
+#endif
 	/* LEDs */
 	at91_gpio_leds(ek_leds, ARRAY_SIZE(ek_leds));
 	/* Push Buttons */
+#if 0
 	ek_add_device_buttons();
+#endif
 }
 
-MACHINE_START(AT91SAM9260EK, "Atmel AT91SAM9260-EK")
+MACHINE_START(AT91SAM9260EK, "==[ Atmel AT91SAM9260-SUSANIN mod (shaman7036@gmail.com) ]==")
 	/* Maintainer: Atmel */
 	.init_time	= at91sam926x_pit_init,
 	.map_io		= at91_map_io,
