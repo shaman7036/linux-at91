@@ -208,13 +208,13 @@ static struct sam9_smc_config __initdata ek_nand_smc_config = {
 	.ncs_write_setup	= 0,
 	.nwe_setup		= 1,
 
-	.ncs_read_pulse		= 3,
-	.nrd_pulse		= 3,
+	.ncs_read_pulse		= 4,
+	.nrd_pulse		= 2,
 	.ncs_write_pulse	= 3,
-	.nwe_pulse		= 3,
+	.nwe_pulse		= 2,
 
 	.read_cycle		= 5,
-	.write_cycle		= 5,
+	.write_cycle		= 3,
 
 	.mode			= AT91_SMC_READMODE | AT91_SMC_WRITEMODE | AT91_SMC_EXNWMODE_DISABLE,
 	.tdf_cycles		= 2,
@@ -253,13 +253,13 @@ static struct at91_mmc_data __initdata ek_mmc_data = {
 static struct gpio_led ek_leds[] = {
 	{	/* "bottom" led, green, userled1 to be defined */
 		.name			= "ds5",
-		.gpio			= AT91_PIN_PA6,
+		.gpio			= AT91_PIN_PA27,
 		.active_low		= 1,
 		.default_trigger	= "none",
 	},
 	{	/* "power" led, yellow */
 		.name			= "ds1",
-		.gpio			= AT91_PIN_PA9,
+		.gpio			= AT91_PIN_PA28,
 		.default_trigger	= "heartbeat",
 	}
 };
@@ -355,8 +355,10 @@ static void __init ek_board_init(void)
 	/* SSC (to AT73C213) */
 	at73c213_set_clk(&at73c213_data);
 	at91_add_device_ssc(AT91SAM9260_ID_SSC, ATMEL_SSC_TX);
+#endif
 	/* LEDs */
 	at91_gpio_leds(ek_leds, ARRAY_SIZE(ek_leds));
+#if 0
 	/* Push Buttons */
 	ek_add_device_buttons();
 #endif
